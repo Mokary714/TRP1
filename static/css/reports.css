@@ -1,5 +1,5 @@
 /* ============================================
-   Reports Page Style Sheet - Trade Journal (Enhanced & Fixed)
+   Reports Page Style Sheet - Trade Journal (Enhanced & Updated)
    ============================================ */
 
 /* 1. Root Variables for Theme Flexibility */
@@ -95,9 +95,7 @@ body {
   z-index: 10;
 }
 
-/* 5
-
-. Page Header Container */
+/* 5. Page Header Container */
 .page-header-container {
   display: flex;
   justify-content: space-between;
@@ -176,8 +174,10 @@ body {
 }
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 .form-group {
   position: relative;
@@ -205,6 +205,7 @@ textarea {
   font-size: 14px;
   color: var(--text-color);
   transition: var(--transition);
+  animation: fadeIn 0.5s ease-in-out;
 }
 input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus,
@@ -276,7 +277,7 @@ select, option {
   width: 200px;
   height: 200px;
 }
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .form-section {
     padding: 15px;
     margin: 0 15px 20px;
@@ -362,6 +363,10 @@ select, option {
   max-width: 180px;
   transition: var(--transition);
 }
+.reports-page #trades-table tbody td:nth-child(5) { /* ستون سشن */
+  max-width: 250px; /* افزایش عرض برای همپوشانی‌های طولانی */
+  white-space: normal; /* اجازه شکست خط برای سشن‌های طولانی */
+}
 .reports-page #trades-table tbody tr {
   background: var(--card-bg);
   transition: var(--transition);
@@ -381,7 +386,7 @@ select, option {
   align-items: center;
   gap: 5px;
 }
-.reports-page #trades-table tbody td[colspan="15"] {
+.reports-page #trades-table tbody td[colspan="14"] {
   text-align: center;
   font-style: italic;
   color: rgba(0, 0, 0, 0.6);
@@ -457,7 +462,7 @@ select, option {
 .reports-page #trades-table tbody td .profit-loss-value.negative {
   color: #ef4444;
 }
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .reports-page .table-container {
     margin: 0 15px 20px;
     padding: 15px;
