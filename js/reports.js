@@ -27,8 +27,6 @@ async function fetchTradesFromApi() {
         const trades = await response.json();
         console.log("Trades fetched successfully for reports page:", trades);
         return trades || []; // اطمینان از برگرداندن آرایه (حتی اگر null یا undefined باشد)
-
-
     } catch (error) {
         console.error("Error fetching trades for reports page:", error);
         return []; // در صورت بروز خطا، یک آرایه خالی برگردانید
@@ -39,28 +37,78 @@ async function fetchTradesFromApi() {
 async function fetchMasterDataFromApi() {
     console.log("Fetching master data from API for reports page...");
     try {
-        const response = await fetch('/api/masterdata'); // فرض بر وجود این API endpoint است
+        const response = await fetch('/api/masterdata');
         if (!response.ok) {
             console.error("HTTP error fetching master data:", response.status);
-            return { symbols: [], brokers: [], strategies: [], emotions: [] }; // در صورت خطا، آبجکت خالی برگردانید
+            return { symbols: [], brokers: [], strategies: [], emotions: [] };
         }
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
             console.error("Invalid content type for master data:", contentType);
-            return { symbols: [], brokers: [], strategies: [], emotions: [] }; // در صورت پاسخ نامعتبر، آبجکت خالی برگردانید
+            return { symbols: [], brokers: [], strategies: [], emotions: [] };
         }
         const masterData = await response.json();
         console.log("Master data fetched successfully:", masterData);
         return masterData;
     } catch (error) {
         console.error("Error fetching master data for reports page:", error);
-        return { symbols: [], brokers: [], strategies: [], emotions: [] }; // در صورت بروز خطا، آبجکت خالی برگردانید
+        return { symbols: [], brokers: [], strategies: [], emotions: [] };
     }
 }
 
 // ===========================================
 // Utility Functions (Date & Calculation)
 // ===========================================
+
+// تابع محاسبه سشن معاملاتی از entryTime
+function getTradingSession(entryTime) {
+    if (!entryTime) return '---';
+    try {
+        const entryDate = new Date(entryTime);
+        const utcHours = entryDate.getUTCHours(); // Get UTC hour of trade entry
+
+        const sessions = [];
+        // Define session ranges in UTC hours (approximate for Forex)
+        const sessionRanges = {
+            'سیدنی': [22, 7], // 10 PM to 7 AM UTC (previous day to current day)
+            'توکیو': [0, 9],    // 0 AM to 9 AM UTC
+            'لندن': [7, 16],  // 7 AM to 4 PM UTC
+            'نیویورک': [12, 21] // 12 PM to 9 PM UTC
+        };
+
+        for (const sessionName in sessionRanges) {
+            const [start, end] = sessionRanges[sessionName];
+            if (start > end) { // Handles sessions that cross midnight (e.g., Sydney)
+                if (utcHours >= start || utcHours < end) {
+                    sessions.push(sessionName);
+                }
+            } else {
+                if (utcHours >= start && utcHours < end) {
+                    sessions.push(sessionName);
+                }
+            }
+        }
+
+        if (sessions.length === 0) return 'خارج از سشن‌ها (UTC)';
+        return sessions.join(' / '); // Join multiple sessions if overlapping
+    } catch (e) {
+        console.error("Error getting trading session:", e);
+        return 'Error session';
+    }
+}
+
+// تابع استخراج روز هفته به فارسی
+function getWeekday(entryTime) {
+    if (!entryTime) return '---';
+    try {
+        const date = new Date(entryTime);
+        const days = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
+        return days[date.getDay()];
+    } catch (e) {
+        console.error("Error getting weekday:", e);
+        return 'Error weekday';
+    }
+}
 
 // تابع کمکی برای محاسبه سود/زیان و سود/زیان پیپ
 function calculateProfitLoss(trade) {
@@ -70,33 +118,26 @@ function calculateProfitLoss(trade) {
     const commission = parseFloat(trade.commission || 0); // کمیسیون ممکن است وجود نداشته باشد
 
     if (isNaN(entryPrice) || (trade.exitTime && isNaN(exitPrice)) || isNaN(volume)) {
-        // اگر exitTime ندارد، فرض کنید هنوز باز است و سود/زیان 0 است.
         return { profitLoss: 0, pipProfitLoss: 0, tradeStatus: 'Pending' };
     }
 
     let profitLoss = 0;
     let pipProfitLoss = 0;
 
-    if (trade.exitTime) { // فقط اگر ترید بسته شده باشد، سود/زیان را محاسبه کن
+    if (trade.exitTime) {
         if (trade.tradeDirection === 'Buy') {
-            // فرض: برای جفت ارزهای 4 رقمی (مثل EURUSD) ضربدر 10000, برای 2 رقمی (مثل USDJPY) ضربدر 100
-            // برای سادگی فعلاً یک ضریب کلی 100000 (معادل 10 دلار به ازای هر 0.1 لات برای جفت‌ارزهای 4 رقمی)
-            // و برای پیپ 10000 (4 رقم اعشار) را در نظر می‌گیریم.
-            // این ضرایب بسته به نوع نماد و بروکر می‌تواند متفاوت باشد.
             profitLoss = (exitPrice - entryPrice) * volume * 100000 - commission;
-            pipProfitLoss = (exitPrice - entryPrice) * 10000; // 4 رقم اعشار برای پیپ
+            pipProfitLoss = (exitPrice - entryPrice) * 10000;
         } else if (trade.tradeDirection === 'Sell') {
             profitLoss = (entryPrice - exitPrice) * volume * 100000 - commission;
             pipProfitLoss = (entryPrice - exitPrice) * 10000;
         }
     }
 
-    // گرد کردن پیپ سود/زیان به دو رقم اعشار برای نمایش
     pipProfitLoss = parseFloat(pipProfitLoss.toFixed(2));
 
-    // محاسبه وضعیت ترید بر اساس سود/زیان
-    let tradeStatus = 'Pending'; // فرض اولیه
-    if (trade.exitTime) { // اگر ترید بسته شده باشد
+    let tradeStatus = 'Pending';
+    if (trade.exitTime) {
         if (profitLoss > 0) {
             tradeStatus = 'Win';
         } else if (profitLoss < 0) {
@@ -104,14 +145,12 @@ function calculateProfitLoss(trade) {
         } else {
             tradeStatus = 'BreakEven';
         }
-    } else {
-        tradeStatus = 'Pending'; // اگر exitTime ندارد، یعنی هنوز باز است
     }
 
     return {
         profitLoss: parseFloat(profitLoss.toFixed(2)),
         pipProfitLoss: pipProfitLoss,
-        tradeStatus: tradeStatus // اضافه کردن وضعیت ترید
+        tradeStatus: tradeStatus
     };
 }
 
@@ -121,10 +160,10 @@ function calculateDuration(trade) {
     const exitTime = new Date(trade.exitTime);
 
     if (isNaN(entryTime) || isNaN(exitTime) || !trade.exitTime) {
-        return 'در حال اجرا'; // اگر exitTime ندارد، یعنی هنوز باز است
+        return 'در حال اجرا';
     }
 
-    const diffMs = exitTime - entryTime; // اختلاف به میلی‌ثانیه
+    const diffMs = exitTime - entryTime;
     const diffMinutes = Math.round(diffMs / (1000 * 60));
     const hours = Math.floor(diffMinutes / 60);
     const minutes = diffMinutes % 60;
@@ -136,15 +175,21 @@ function calculateDuration(trade) {
 // UI Population Functions
 // ===========================================
 
-// پر کردن فیلترهای دراپ‌داون با اطلاعات Master Data
-function populateFilterOptions(data) {
+// پر کردن فیلترهای دراپ‌داون با اطلاعات Master Data و Trades
+function populateFilterOptions(data, trades) {
     const symbolSelect = document.getElementById('filter-symbol');
     const brokerSelect = document.getElementById('filter-broker');
     const strategySelect = document.getElementById('filter-strategy');
-    // const emotionSelect = document.getElementById('filter-emotion'); // این فیلد در HTML ثابت است، نیازی به پر کردن پویا ندارد
+    const emotionSelect = document.getElementById('filter-emotion');
+    const timeframeSelect = document.getElementById('timeframe-filter');
+    const statusSelect = document.getElementById('status-filter');
+    const tradeTypeSelect = document.getElementById('trade-type-filter');
+    const sessionSelect = document.getElementById('session-filter');
+    const weekdaySelect = document.getElementById('weekday-filter');
 
     // پر کردن نمادها
     if (symbolSelect && data.symbols) {
+        symbolSelect.innerHTML = '<option value="">همه</option>';
         data.symbols.forEach(symbol => {
             const option = document.createElement('option');
             option.value = symbol.name;
@@ -155,6 +200,7 @@ function populateFilterOptions(data) {
 
     // پر کردن بروکرها
     if (brokerSelect && data.brokers) {
+        brokerSelect.innerHTML = '<option value="">همه</option>';
         data.brokers.forEach(broker => {
             const option = document.createElement('option');
             option.value = broker.name;
@@ -165,11 +211,91 @@ function populateFilterOptions(data) {
 
     // پر کردن استراتژی‌ها
     if (strategySelect && data.strategies) {
+        strategySelect.innerHTML = '<option value="">همه</option>';
         data.strategies.forEach(strategy => {
             const option = document.createElement('option');
             option.value = strategy.name;
             option.textContent = strategy.name;
             strategySelect.appendChild(option);
+        });
+    }
+
+    // پر کردن احساسات
+    if (emotionSelect && data.emotions) {
+        emotionSelect.innerHTML = '<option value="">همه</option>';
+        data.emotions.forEach(emotion => {
+            const option = document.createElement('option');
+            option.value = emotion.name;
+            option.textContent = emotion.name;
+            emotionSelect.appendChild(option);
+        });
+    }
+
+    // پر کردن تایم‌فریم‌ها (از trades یا لیست ثابت)
+    if (timeframeSelect) {
+        const timeframes = ['M1', 'M5', 'M15', 'M30', 'H1', 'H4', 'D1', 'W1'];
+        timeframeSelect.innerHTML = '<option value="">همه</option>';
+        timeframes.forEach(timeframe => {
+            const option = document.createElement('option');
+            option.value = timeframe;
+            option.textContent = timeframe;
+            timeframeSelect.appendChild(option);
+        });
+    }
+
+    // پر کردن وضعیت
+    if (statusSelect) {
+        const statuses = [
+            { value: 'Win', text: 'موفق' },
+            { value: 'Loss', text: 'ناموفق' },
+            { value: 'Pending', text: 'در انتظار' },
+            { value: 'BreakEven', text: 'سر به سر' }
+        ];
+        statusSelect.innerHTML = '<option value="">همه</option>';
+        statuses.forEach(status => {
+            const option = document.createElement('option');
+            option.value = status.value;
+            option.textContent = status.text;
+            statusSelect.appendChild(option);
+        });
+    }
+
+    // پر کردن نوع ترید
+    if (tradeTypeSelect) {
+        const tradeTypes = [
+            { value: 'Buy', text: 'خرید' },
+            { value: 'Sell', text: 'فروش' }
+        ];
+        tradeTypeSelect.innerHTML = '<option value="">همه</option>';
+        tradeTypes.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type.value;
+            option.textContent = type.text;
+            tradeTypeSelect.appendChild(option);
+        });
+    }
+
+    // پر کردن سشن‌ها
+    if (sessionSelect) {
+        const sessions = ['سیدنی', 'توکیو', 'لندن', 'نیویورک'];
+        sessionSelect.innerHTML = '<option value="">همه</option>';
+        sessions.forEach(session => {
+            const option = document.createElement('option');
+            option.value = session;
+            option.textContent = session;
+            sessionSelect.appendChild(option);
+        });
+    }
+
+    // پر کردن روزهای هفته
+    if (weekdaySelect) {
+        const weekdays = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
+        weekdaySelect.innerHTML = '<option value="">همه</option>';
+        weekdays.forEach(day => {
+            const option = document.createElement('option');
+            option.value = day;
+            option.textContent = day;
+            weekdaySelect.appendChild(option);
         });
     }
 }
@@ -181,36 +307,36 @@ function populateTradesTable(tradesToDisplay) {
         console.error("Table body element not found!");
         return;
     }
-    tableBody.innerHTML = ''; // ابتدا محتوای قبلی را پاک کنید
+    tableBody.innerHTML = '';
 
     if (tradesToDisplay.length === 0) {
         const noDataRow = document.createElement('tr');
-        // colspan باید برابر با تعداد ستون‌های Thead باشد
-        // در حال حاضر 12 ستون داریم (15 - 3 حذف + 1 اضافه = 13)
-        // ستون‌های فعلی: نماد, تاریخ ورود, جهت, سشن, حجم, سود/زیان ($), سود/زیان (پیپ), مدت, بروکر, استراتژی, احساسات, وضعیت, عملیات
-        // تعداد ستون‌ها: 13
-        noDataRow.innerHTML = `<td colspan="13" style="text-align: center;">هیچ تریدی برای نمایش یافت نشد.</td>`;
+        noDataRow.innerHTML = `<td colspan="14" style="text-align: center;">هیچ تریدی برای نمایش یافت نشد.</td>`;
         tableBody.appendChild(noDataRow);
-        return; // پایان تابع
+        return;
     }
 
     tradesToDisplay.forEach(trade => {
         const { profitLoss, pipProfitLoss, tradeStatus } = calculateProfitLoss(trade);
         const duration = calculateDuration(trade);
+        const session = getTradingSession(trade.entryTime);
+        const weekday = getWeekday(trade.entryTime);
 
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${trade.symbol}</td>
             <td>${new Date(trade.entryTime).toLocaleDateString('fa-IR')}</td>
             <td>${trade.tradeDirection === 'Buy' ? 'خرید' : 'فروش'}</td>
-            <td>${trade.timeframe || '-'}</td> <td>${trade.volume}</td>
+            <td>${trade.timeframe || '-'}</td>
+            <td>${session}</td>
+            <td>${trade.volume}</td>
             <td><span class="profit-loss-value ${profitLoss < 0 ? 'negative' : 'positive'}">${profitLoss.toFixed(2)}</span></td>
             <td><span class="profit-loss-value ${pipProfitLoss < 0 ? 'negative' : 'positive'}">${pipProfitLoss.toFixed(2)}</span></td>
             <td>${duration}</td>
             <td>${trade.broker}</td>
             <td>${trade.strategy}</td>
+            <td>${tradeStatus === 'Win' ? 'موفق' : tradeStatus === 'Loss' ? 'ناموفق' : tradeStatus === 'Pending' ? 'در انتظار' : 'سر به سر'}</td>
             <td>${trade.emotion}</td>
-            <td>${tradeStatus}</td>
             <td>
                 <button class="edit-btn" data-trade-id="${trade.id}">ویرایش</button>
                 <button class="delete-btn" data-trade-id="${trade.id}">حذف</button>
@@ -262,7 +388,6 @@ function updateSummaryStats(trades) {
     const avgProfitPerTradeUSD = totalTrades > 0 ? totalProfitLossUSD / totalTrades : 0;
     const avgProfitPerTradePip = totalTrades > 0 ? totalProfitLossPip / totalTrades : 0;
 
-
     document.getElementById('total-trades').textContent = totalTrades;
     document.getElementById('total-wins').textContent = totalWins;
     document.getElementById('total-losses').textContent = totalLosses;
@@ -293,14 +418,17 @@ async function applyFilters() {
     const filterBroker = document.getElementById('filter-broker').value;
     const filterStrategy = document.getElementById('filter-strategy').value;
     const filterEmotion = document.getElementById('filter-emotion').value;
-    // const filterStatus = document.getElementById('filter-status').value; // فیلتر وضعیت حذف شد
+    const timeframeFilter = document.getElementById('timeframe-filter').value;
+    const statusFilter = document.getElementById('status-filter').value;
+    const tradeTypeFilter = document.getElementById('trade-type-filter').value;
+    const weekdayFilter = document.getElementById('weekday-filter').value;
+    const sessionFilter = document.getElementById('session-filter').value;
 
-    let filteredTrades = [...allTrades]; // همیشه با یک کپی از تمام تریدها شروع کنید
+    let filteredTrades = [...allTrades];
 
     // اعمال فیلترها
     if (filterStartDate) {
         filteredTrades = filteredTrades.filter(trade => {
-            // استفاده از entryTime برای شروع فیلتر
             const tradeDate = new Date(trade.entryTime.substring(0, 10));
             const filterDate = new Date(filterStartDate);
             return tradeDate.getTime() >= filterDate.getTime();
@@ -308,10 +436,8 @@ async function applyFilters() {
     }
     if (filterEndDate) {
         filteredTrades = filteredTrades.filter(trade => {
-            // اگر exitTime دارد از آن استفاده کن، در غیر این صورت از entryTime
             const tradeDate = new Date((trade.exitTime || trade.entryTime).substring(0, 10));
             const filterDate = new Date(filterEndDate);
-            // برای اینکه شامل کل روز پایان شود، یک روز به filterDate اضافه می‌کنیم
             filterDate.setDate(filterDate.getDate() + 1);
             return tradeDate.getTime() < filterDate.getTime();
         });
@@ -328,13 +454,27 @@ async function applyFilters() {
     if (filterEmotion) {
         filteredTrades = filteredTrades.filter(trade => trade.emotion === filterEmotion);
     }
-    // فیلتر وضعیت حذف شد
-    // if (filterStatus) {
-    //     filteredTrades = filteredTrades.filter(trade => {
-    //         const { tradeStatus } = calculateProfitLoss(trade);
-    //         return tradeStatus === filterStatus;
-    //     });
-    // }
+    if (timeframeFilter) {
+        filteredTrades = filteredTrades.filter(trade => trade.timeframe === timeframeFilter);
+    }
+    if (statusFilter) {
+        filteredTrades = filteredTrades.filter(trade => {
+            const { tradeStatus } = calculateProfitLoss(trade);
+            return tradeStatus === statusFilter;
+        });
+    }
+    if (tradeTypeFilter) {
+        filteredTrades = filteredTrades.filter(trade => trade.tradeDirection === tradeTypeFilter);
+    }
+    if (weekdayFilter) {
+        filteredTrades = filteredTrades.filter(trade => getWeekday(trade.entryTime) === weekdayFilter);
+    }
+    if (sessionFilter) {
+        filteredTrades = filteredTrades.filter(trade => {
+            const session = getTradingSession(trade.entryTime);
+            return session.includes(sessionFilter);
+        });
+    }
 
     populateTradesTable(filteredTrades);
     updateSummaryStats(filteredTrades);
@@ -347,9 +487,13 @@ function resetFilters() {
     document.getElementById('filter-broker').value = '';
     document.getElementById('filter-strategy').value = '';
     document.getElementById('filter-emotion').value = '';
-    // document.getElementById('filter-status').value = ''; // فیلتر وضعیت حذف شد
+    document.getElementById('timeframe-filter').value = '';
+    document.getElementById('status-filter').value = '';
+    document.getElementById('trade-type-filter').value = '';
+    document.getElementById('weekday-filter').value = '';
+    document.getElementById('session-filter').value = '';
 
-    applyFilters(); // اعمال فیلترها با مقادیر خالی (نمایش همه تریدها)
+    applyFilters();
 }
 
 // ===========================================
@@ -362,8 +506,6 @@ async function handleTableActions(event) {
 
     if (target.classList.contains('edit-btn')) {
         if (tradeId) {
-            // هدایت به صفحه index.html با ID ترید برای ویرایش
-            // ../index.html برای برگشت به پوشه ریشه از /forms/
             window.location.href = `../index.html?tradeId=${tradeId}`;
         } else {
             console.error("No trade ID found for edit button.");
@@ -373,9 +515,7 @@ async function handleTableActions(event) {
             if (confirm('آیا از حذف این ترید اطمینان دارید؟ این عملیات برگشت ناپذیر است.')) {
                 const success = await deleteTradeFromApi(tradeId);
                 if (success) {
-                    // ترید را از لیست allTrades حذف کنید
                     allTrades = allTrades.filter(trade => trade.id !== parseInt(tradeId));
-                    // جدول و آمار را به روز کنید
                     populateTradesTable(allTrades);
                     updateSummaryStats(allTrades);
                 } else {
@@ -412,22 +552,20 @@ async function deleteTradeFromApi(tradeId) {
     }
 }
 
-
 // ===========================================
 // Initialization
 // ===========================================
 
-// بارگذاری اولیه داده‌ها و اضافه کردن Event Listenerها پس از بارگذاری کامل DOM
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("DOM fully loaded and parsed for reports page.");
 
     // بارگذاری و ذخیره تمام تریدها
     const trades = await fetchTradesFromApi();
-    allTrades = trades; // به روزرسانی متغیر سراسری
+    allTrades = trades;
 
     // دریافت اطلاعات پایه و پر کردن فیلترها
     masterData = await fetchMasterDataFromApi();
-    populateFilterOptions(masterData);
+    populateFilterOptions(masterData, allTrades);
 
     // پر کردن اولیه جدول و آمار
     populateTradesTable(allTrades);
@@ -437,21 +575,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('filter-apply-btn').addEventListener('click', applyFilters);
     document.getElementById('filter-reset-btn').addEventListener('click', resetFilters);
 
-    // اضافه کردن Event Listener برای دکمه‌های ویرایش و حذف به صورت делеگاسیون
+    // اضافه کردن Event Listener برای دکمه‌های ویرایش و حذف
     const tradesTableBody = document.getElementById('trades-table-body');
     if (tradesTableBody) {
         tradesTableBody.addEventListener('click', handleTableActions);
     } else {
         console.error("Element with ID 'trades-table-body' not found. Edit/Delete buttons might not work.");
     }
-
-    // اضافه کردن Event Listener به فیلترها برای اعمال فیلتر به صورت خودکار (اختیاری)
-    // اگر میخواهید با هر تغییر فیلتر، نتایج بروز شوند، این خطوط را فعال کنید:
-    // document.getElementById('filter-start-date').addEventListener('change', applyFilters);
-    // document.getElementById('filter-end-date').addEventListener('change', applyFilters);
-    // document.getElementById('filter-symbol').addEventListener('change', applyFilters);
-    // document.getElementById('filter-broker').addEventListener('change', applyFilters);
-    // document.getElementById('filter-strategy').addEventListener('change', applyFilters);
-    // document.getElementById('filter-emotion').addEventListener('change', applyFilters);
-    // document.getElementById('filter-status').addEventListener('change', applyFilters);
 });
