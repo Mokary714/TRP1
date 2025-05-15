@@ -1,0 +1,151 @@
+{
+  "symbols": [
+    {
+      "id": 1746616588903,
+      "name": "EURUSD"
+    },
+    {
+      "id": 1746616678866,
+      "name": "USDJPY"
+    },
+    {
+      "id": 1746739710215,
+      "name": "ِِِِDji30"
+    },
+    {
+      "id": 1747068277815,
+      "name": "gbpusd"
+    },
+    {
+      "id": 1747078622088,
+      "name": "XAUUSD"
+    },
+    {
+      "id": 1747165128291,
+      "name": "testnemad"
+    }
+  ],
+  "brokers": [
+    {
+      "id": 1746549564215,
+      "name": "xChief",
+      "accounts": [
+        {
+          "id": 1746549579460,
+          "number": "5106200",
+          "initialBalance": 490
+        },
+        {
+          "id": 1746905828264,
+          "number": "12125454",
+          "initialBalance": 122
+        }
+      ]
+    },
+    {
+      "id": 1746593966440,
+      "name": "brukerts",
+      "accounts": [
+        {
+          "id": 1746593985038,
+          "number": "90909090",
+          "initialBalance": 100
+        },
+        {
+          "id": 1746867581861,
+          "number": "215555",
+          "initialBalance": 0
+        }
+      ]
+    },
+    {
+      "id": 1746598316651,
+      "name": "TestBR",
+      "accounts": [
+        {
+          "id": 1746598331403,
+          "number": "90909090",
+          "initialBalance": 55
+        }
+      ]
+    },
+    {
+      "id": 1746598679000,
+      "name": "ننTestBR",
+      "accounts": [
+        {
+          "id": 1746623268891,
+          "number": "2121",
+          "initialBalance": 1000
+        }
+      ]
+    },
+    {
+      "id": 1746875318781,
+      "name": "mokbrouker",
+      "accounts": []
+    },
+    {
+      "id": 1747068290157,
+      "name": "CHMOK",
+      "accounts": [
+        {
+          "id": 1747068309234,
+          "number": "12Tb548877",
+          "initialBalance": 200
+        }
+      ]
+    },
+    {
+      "id": 1747165183869,
+      "name": "MokBruker",
+      "accounts": [
+        {
+          "id": 1747165199602,
+          "number": "10101010",
+          "initialBalance": 500
+        }
+      ]
+    }
+  ],
+  "strategies": [
+    {
+      "id": 1746552939144,
+      "name": "Breakout"
+    },
+    {
+      "id": 1746555532053,
+      "name": "MTR"
+    },
+    {
+      "id": 1747068329793,
+      "name": "MTR-DOWN"
+    },
+    {
+      "id": 1747165156212,
+      "name": "chanet-do"
+    }
+  ],
+  "emotions": [
+    {
+      "id": "e1",
+      "name": "fear"
+    },
+    {
+      "id": "e2",
+      "name": "greed"
+    },
+    {
+      "id": "e3",
+      "name": "hope"
+    },
+    {
+      "id": "e4",
+      "name": "excitement"
+    },
+    {
+      "id": "e5",
+      "name": "neutral"
+    }
+  ]
+}

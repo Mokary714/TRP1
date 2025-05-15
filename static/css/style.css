@@ -1,0 +1,1167 @@
+/* ============================================
+   Trade Journal Style Sheet - Complete Aesthetic & Responsiveness Enhancements
+   ============================================ */
+
+/* 1. Font Definitions */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../../Assets/fonts/Vazirmatn-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 2. Reset & Core */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  min-height: 100vh; /* استفاده از min-height برای اطمینان از پر کردن صفحه */
+  scroll-behavior: smooth; /* اسکرول نرم */
+}
+body {
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 16px; /* اندازه فونت پایه کمی بزرگتر */
+  line-height: 1.6;
+  color: #333;
+  background-image: linear-gradient(90deg, #1CB5E0 0%, #000851 100%); /* پس زمینه گرادیانت کلی صفحه */
+  background-attachment: fixed;
+  margin: 0; /* حذف مارجین پیش فرض مرورگر */
+  padding: 0; /* حذف پدینگ پیش فرض مرورگر */
+  direction: rtl;
+  text-align: right;
+  display: flex; /* استفاده از فلکس برای مرکز کردن محتوا در صفحه */
+  justify-content: center; /* مرکز کردن افقی */
+  align-items: flex-start; /* شروع از بالا عمودی */
+  /* overflow-y: hidden;  <-- این خط برای آزمایش بود، در نسخه نهایی حذف شود مگر نیاز باشد */
+}
+
+/* توجه: پدینگ اطراف محتوا حالا روی کانتینر داخلی یا بخش‌های دیگر اعمال می‌شود */
+
+
+/* تنظیم پدینگ بدنه در موبایل (حذف شده برای جلوگیری از تداخل با مرکزیت) */
+/* اگر نیاز به پدینگ در موبایل بود، آن را روی .form-container یا .content-columns اعمال کنید */
+ @media (max-width: 768px) {
+  body {
+    padding: 15px;
+	
+  }
+} 
+
+
+/* 3. Form Container (کانتینر اصلی نگهدارنده فرم و کارت‌ها) */
+.form-container {
+  
+  margin: 20px auto; /* مرکز کردن افقی با مارجین اتوماتیک و فاصله 20px از بالا و پایین */
+  background-color: rgba(255, 255, 255, 0.98); /* پس زمینه تقریبا مات سفید */
+  border-radius: 15px; /* گردتر کردن گوشه‌ها */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2); /* سایه عمیق‌تر */
+  overflow: hidden; /* برای اینکه محتوای داخل گوشه‌های گرد را قطع کند */
+  display: flex; /* این کانتینر خودش هم فلکس است برای چیدمان داخلی */
+  flex-direction: column; /* محتوای داخل آن زیر هم چیده می‌شود */
+  width: 100%; /* پر کردن عرض موجود تا max-width */
+   max-width: 1400px; /* حداکثر عرض برای محتوای صفحه (می‌توانید این مقدار را تنظیم کنید) */
+    margin-left: auto;  /* تراز افقی وسط در جهت نوشتاری فعلی (RTL) */
+    margin-right: auto; /* تراز افقی وسط در جهت نوشتاری فعلی (RTL) */
+}
+
+/* استایل دهی به تیتر اصلی فرم (h2 داخل form-container) - ارتفاع و فونت کوچکتر و فاصله پایین بیشتر */
+.form-container h2 {
+  font-size: 24px; /* اندازه فونت کمی کوچکتر */
+  font-weight: 800;
+  text-align: center;
+  padding: 12px 30px; /* کاهش پدینگ بالا و پایین برای کاهش ارتفاع */
+  border-radius: 15px 15px 0 0;
+
+  background: linear-gradient(45deg, #FF6B6B 0%, #FF4F7A 50%, #FF386A 100%);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* سایه زیر تیتر کمی ملایم‌تر */
+  margin-bottom: 25px; /* افزایش مارجین پایین برای فاصله بیشتر از بخش پایین */
+}
+/* Style for the container holding page title and nav in reports.html */
+.page-header-container {
+    display: flex; /* استفاده از فلکس برای چیدمان کنار هم */
+    justify-content: space-between; /* پخش کردن عنوان و ناوبری در دو طرف */
+    align-items: center; /* تراز عمودی در مرکز */
+    margin-bottom: 20px; /* فاصله با محتوای زیرین */
+    flex-wrap: wrap; /* اجازه شکستن در موبایل */
+    gap: 10px; /* فاصله بین آیتم ها در صورت شکستن */
+    /* اضافه کردن پدینگ یا پس زمینه اگر میخواهید این نوار مشخص باشد */
+    /* padding: 10px 0; */
+    /* background-color: #f0f0f0; */
+}
+
+/* تنظیمات عنوان در این بخش */
+.page-header-container h2 {
+    margin: 0; /* حذف مارجین پیش فرض h2 */
+    border-bottom: none; /* حذف خط زیر عنوان اگر نمی خواهید */
+    padding-bottom: 0; /* حذف پدینگ پایین */
+    font-size: 1.6em; /* اندازه فونت مناسب */
+    color: #333; /* رنگ مناسب برای عنوان */
+}
+
+/* تنظیمات ناوبری داخل این بخش - بازنویسی استایل های .main-nav ul */
+/* این استایل ها اولویت بالاتری از استایل .main-nav ul در بخش 3 style.css دارند */
+.page-header-container .main-nav ul {
+    /* ریست کردن استایل های فلکس ناوبری که در هدر کامل (بخش 3 style.css) تعریف شده اند */
+    display: block; /* تغییر از فلکس به بلاک */
+    /* سایر استایل های فلکس مثل justify-content, align-items نیز ریست می شوند */
+}
+
+/* استایل لینک های ناوبری در این بخش */
+.page-header-container .main-nav ul li {
+    display: inline-block; /* نمایش آیتم های لیست کنار هم */
+     margin: 0 8px; /* فاصله بین لینک ها */
+}
+
+.page-header-container .main-nav ul li:last-child {
+    margin-left: 0; /* حذف مارجین در آخرین آیتم سمت چپ در RTL */
+}
+
+.page-header-container .main-nav ul li a {
+    /* از استایل های لینک ناوبری در بخش 3 style.css استفاده می شود */
+    /* اگر نیاز به بازنویسی رنگ یا ظاهر لینک ها در این بخش دارید اینجا اضافه کنید */
+    /* color: #007bff; */
+    /* font-size: 1em; */
+     padding: 4px 6px; /* پدینگ کمتر برای لینک ها در این بخش */
+}
+
+/* responsive adjustments for this specific container */
+@media (max-width: 768px) {
+    .page-header-container {
+        flex-direction: column; /* زیر هم در موبایل */
+        align-items: flex-start; /* تراز به سمت راست در موبایل */
+    }
+    .page-header-container h2 {
+        width: 100%; /* اشغال تمام عرض در موبایل */
+        text-align: center; /* مرکز کردن در موبایل */
+        margin-bottom: 10px; /* فاصله با ناوبری در موبایل */
+    }
+    .page-header-container .main-nav ul {
+         display: flex; /* بازگرداندن فلکس در موبایل برای چیدمان افقی لینک ها */
+         justify-content: center; /* مرکز کردن لینک ها در موبایل */
+         width: 100%; /* اشغال تمام عرض توسط ناوبری در موبایل */
+         gap: 5px; /* فاصله کمتر بین لینک ها در موبایل */
+    }
+     .page-header-container .main-nav ul li {
+         margin: 0 5px; /* تنظیم مارجین در موبایل */
+     }
+      .page-header-container .main-nav ul li a {
+        padding: 6px 8px; /* پدینگ مناسب تر در موبایل */
+     }
+}
+
+/* 4. Columns Layout (ستون‌های بخش فرم و کارت‌ها در صفحه اصلی و مدیریت) */
+.content-columns {
+  display: flex;
+  flex-direction: column; /* پیش فرض عمودی برای موبایل */
+  gap: 30px; /* افزایش فاصله بین ستون‌ها در حالت عمودی و افقی */
+  padding: 0 30px 30px 30px; /* حذف پدینگ بالا، حفظ پدینگ راست، پایین و چپ */
+}
+/* ستون‌های داخلی content-columns */
+.left-column, .right-column {
+  width: 100%; /* در حالت پیش فرض (موبایل) عرض کامل را بگیرند */
+}
+
+/* تنظیمات برای صفحات عریض تر */
+@media (min-width: 992px) {
+  .content-columns {
+    flex-direction: row-reverse; /* چیدمان افقی از راست به چپ */
+    gap: 40px; /* فاصله بیشتر در حالت افقی */
+  }
+  .left-column {
+    flex: 1; /* نسبت عرض ستون‌ها (می‌توانید تنظیم کنید) */
+  }
+  .right-column {
+    flex: 1;
+  }
+}
+
+/* تنظیم پدینگ ستون‌ها در موبایل */
+@media (max-width: 768px) {
+  .content-columns {
+    padding: 0 15px 15px 15px; /* پدینگ کمتر در موبایل */
+    gap: 20px;
+  }
+}
+
+
+/* 5. Form Section (بخشی که فرم داخل آن قرار دارد) */
+.form-section {
+  background: #ffffff; /* پس زمینه سفید خالص */
+  padding: 10px; /* پدینگ داخلی کمتر برای فشردگی بیشتر */
+  border-radius: 12px;
+  box-shadow: 0 8px 10px rgba(0,0,0,0.1); /* سایه کمی ملایم‌تر */
+  border: 1px solid #e0e0e0;
+}
+.form-grid {
+  display: grid;
+  /* تنظیم گرید برای سعی در قرار دادن 3 یا 4 ستون با حداقل عرض کوچکتر */
+  grid-template-columns: repeat(auto-fit, minmax(min(180px,100%),1fr)); /* حداقل عرض کمتر برای جا شدن بیشتر ستون‌ها در عرض‌های بیشتر */
+  gap: 10px; /* فاصله بین فیلدها کمی کمتر */
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group.full-width {
+  grid-column: 1 / -1; /* spans all columns (فیلد توضیحات همیشه عرض کامل را می‌گیرد) */
+}
+label {
+  margin-bottom: 5px; /* فاصله کمتر بین لیبل و فیلد */
+  font-size: 13px; /* اندازه فونت کمی کوچکتر */
+  font-weight: bold;
+  color: #555;
+  display: block;
+  text-align: right;
+}
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  padding: 10px 12px; /* پدینگ داخلی کمتر */
+  border: 1px solid #ccc;
+  border-radius: 6px; /* گردی گوشه‌ها کمی کمتر */
+  background: #f8f8f8;
+  width: 100%;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background 0.3s ease-in-out;
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 14px; /* اندازه فونت کمی کوچکتر */
+  color: #333;
+}
+input:not([type="checkbox"]):not([type="radio"]):focus,
+select:focus,
+textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0,123,255,0.25); /* سایه ملایم‌تر هنگام فوکوس */
+  background: #fff;
+  outline: none;
+}
+/* استایل دهی بهتر به placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: #999;
+  font-size: 13px; /* اندازه فونت کمی کوچکتر */
+}
+
+/* کاهش ارتفاع ناحیه متنی توضیحات */
+textarea {
+    min-height: 80px; /* حداقل ارتفاع کمتر برای فشرده‌تر شدن */
+    resize: vertical; /* فقط اجازه تغییر اندازه عمودی توسط کاربر */
+}
+
+/* استایل دهی به دکمه ارسال فرم */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px; /* فاصله کمی کمتر از فیلدها */
+}
+.form-actions button {
+  font-size: 16px;
+  padding: 12px 30px;
+  background: linear-gradient(45deg, #007bff 0%, #0056b3 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.3s ease-in-out; /* اضافه کردن box-shadow به ترنزیشن */
+  font-family: 'Vazirmatn', sans-serif;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,70,180,0.2);
+}
+.form-actions button:hover {
+  background: linear-gradient(45deg, #0056b3 0%, #003f8a 100%);
+  transform: translateY(-2px); /* حرکت کمی بیشتر به بالا */
+  box-shadow: 0 8px 20px rgba(0,70,180,0.3); /* سایه قوی‌تر */
+}
+.form-actions button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0,70,180,0.2); /* سایه کمتر هنگام کلیک */
+}
+
+/* استایل برای Select و Option ها */
+select, option {
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 14px; /* اندازه فونت یکنواخت با بقیه فیلدها */
+}
+
+
+/* 6. Card Styles - بهبود یافته */
+/* استایل دهی بخش نمایش آخرین ترید (#latest-trade-section) و ۱۰ ترید آخر (.recent-trades-section) */
+#latest-trade-section, .recent-trades-section {
+  background: #ffffff; /* پس زمینه سفید برای بخش‌های کارت */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1), 0 2px 5px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px; /* فاصله پایین هر بخش کارت از بخش بعدی */
+   border: 1px solid #e0e0e0; /* اضافه کردن مرز برای بخش‌های کارت */
+}
+
+/* استایل دهی به تیتر 'ترید ثبت شده (آخرین ترید)' - h3 داخل #trade-cards */
+/* اصلاح انتخاب‌گر برای جلوگیری از تداخل با h3 داخل .trade-card */
+#trade-cards > h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 0; /* حذف فاصله بالا */
+  margin-bottom: 15px; /* فاصله پایین */
+  padding: 10px 15px; /* اضافه کردن پدینگ */
+  border-radius: 6px; /* گرد کردن گوشه‌ها */
+  text-align: right; /* تراز راست */
+  background: linear-gradient(45deg, #2196F3 0%, #21CBF3 100%); /* گرادیانت آبی */
+  color: #fff; /* رنگ متن سفید */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* سایه کمی ملایم‌تر */
+}
+
+
+/* استایل دهی به تیتر '۱۰ ترید آخر' - h3 داخل #recent-trades */
+/* اصلاح انتخاب‌گر برای جلوگیری از تداخل با h3 داخل .trade-card */
+#recent-trades > h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 0; /* حذف فاصله بالا */
+  margin-bottom: 15px; /* فاصله پایین */
+   padding: 10px 15px; /* اضافه کردن پدینگ */
+  border-radius: 6px; /* گرد کردن گوشه‌ها */
+  text-align: right; /* تراز راست */
+  background: linear-gradient(45deg, #FFC107 0%, #FF9800 100%); /* گرادیانت زرد/نارنجی */
+   color: #fff; /* رنگ متن سفید یا تیره بر اساس گرادیانت */
+   box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* سایه کمی ملایم‌تر */
+}
+
+
+/* استایل دهی به کانتینرهای داخلی کارت‌ها */
+#trade-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* فاصله بین کارت آخرین ترید و تیتر آن */
+}
+#recent-trades {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* فاصله بین کارت‌های ۱۰ ترید آخر */
+}
+
+/* استایل دهی به هر کارت ترید */
+.trade-card {
+  background: #fff; /* پس زمینه سفید کارت */
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06); /* سایه ملایم‌تر */
+  border: 1px solid #eee; /* اضافه کردن مرز نازک به هر کارت */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out; /* اضافه کردن border-color به ترنزیشن */
+  position: relative; /* برای موقعیت دهی مطلق دکمه‌ها */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: visible; /* جلوگیری از مخفی شدن آیکون‌ها */
+}
+.trade-card:hover {
+  transform: translateY(-5px); /* حرکت کمی بیشتر به بالا */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* سایه قوی‌تر هنگام هاور */
+  border-color: #ccc; /* تغییر رنگ مرز هنگام هاور */
+}
+
+/* استایل دهی به تیتر نماد داخل هر کارت ترید */
+.trade-card h3 {
+  font-size: 15px; /* اندازه فونت کمی بزرگتر */
+  color: #0056b3; /* رنگ آبی کمی تیره‌تر */
+  margin: 0; /* حذف فاصله بالا و پایین */
+  font-weight: bold; /* پررنگ تر */
+  /* اطمینان از عدم تداخل با استایل تیتر اصلی بخش */
+}
+
+
+/* استایل دهی به گرید اطلاعات داخل کارت */
+.card-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); /* حداقل عرض ستون‌های اطلاعات کمی بیشتر */
+  gap: 8px 15px; /* فاصله بین آیتم‌های گرید */
+  border-bottom: 1px dashed #eee; /* خط جداکننده پایین اطلاعات */
+  padding-bottom: 10px;
+}
+.card-info-grid > div {
+  font-size: 14px; /* اندازه فونت اطلاعات کمی بزرگتر */
+  color: #444; /* رنگ کمی تیره‌تر */
+}
+.card-info-grid strong {
+    color: #000; /* رنگ پررنگ تر برای عناوین */
+}
+
+
+/* استایل دهی به وضعیت ترید - بهبود یافته */
+.status {
+   border-radius: 25px; /* کاملا گرد */
+   padding: 7px 12px; /* پدینگ بیشتر */
+   font-size: 12px; /* اندازه فونت کمی بزرگتر */
+   font-weight: bold;
+   align-self: flex-start; /* قرار گرفتن در ابتدای خط */
+   /*min-width: 90px; /* حداقل عرض برای یکنواختی */
+   text-align: center; /* مرکز کردن متن */
+   box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* سایه کوچک برای وضعیت */
+   transition: background 0.3s ease-in-out, color 0.3s ease-in-out; /* ترنزیشن روی رنگ و پس زمینه */
+}
+.status.success {
+  background: linear-gradient(45deg, #5cb85c 0%, #4cae4c 100%); /* گرادیانت سبز */
+  color: #fff; /* متن سفید */
+  border: 1px solid #4cae4c;
+}
+.status.danger {
+  background: linear-gradient(45deg, #d9534f 0%, #c9302c 100%); /* گرادیانت قرمز */
+  color: #fff; /* متن سفید */
+  border: 1px solid #c9302c;
+}
+.status.pending {
+  background: linear-gradient(45deg, #f0ad4e 0%, #ec971f 100%); /* گرادیانت نارنجی */
+  color: #fff; /* متن سفید */
+  border: 1px solid #ec971f;
+}
+
+
+/* استایل دهی به دکمه‌های ویرایش و حذف - بهبود یافته */
+.edit-button, .delete-button {
+  position: absolute;
+  top: 10px;
+  /* background: none;  حذف پس زمینه none */
+  border: none;
+  font-size: 16px; /* اندازه فونت کمی کوچکتر برای هماهنگی با اندازه دکمه */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Emoji', 'Vazirmatn', sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* اضافه کردن ترنزیشن ها */
+  width: 35px; /* عرض ثابت بیشتر */
+  height: 35px; /* ارتفاع ثابت بیشتر */
+  border-radius: 50%; /* دایره ای */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* سایه کوچک پیش فرض */
+}
+.delete-button {
+  left: 10px;
+  color: #fff; /* رنگ آیکون/ایموجی سفید */
+  background: #dc3545; /* پس زمینه قرمز */
+}
+.edit-button {
+  left: 50px; /* فاصله مناسب تر */
+  color: #fff; /* رنگ آیکون/ایموجی سفید */
+  background: #007bff; /* پس زمینه آبی */
+}
+.edit-button:hover, .delete-button:hover {
+  transform: scale(1.1); /* افکت بزرگنمایی هنگام هاور */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* سایه قوی تر هنگام هاور */
+}
+.edit-button:active, .delete-button:active {
+   transform: scale(0.95); /* کمی کوچک شدن هنگام کلیک */
+   box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* سایه کمتر هنگام کلیک */
+}
+
+
+/* استایل برای Select و Option ها */
+select, option {
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 14px; /* اندازه فونت یکنواخت با بقیه فیلدها */
+}
+
+
+/* استایل برای خط جداکننده hr */
+hr {
+    border: none; /* حذف مرز پیش فرض */
+    height: 1px; /* ارتفاع خط */
+    background-color: #e0e0e0; /* رنگ خط خاکستری */
+    margin: 30px 0; /* فاصله بالا و پایین خط */
+}
+
+
+/* استایل برای بخش نمایش آخرین ترید در حالت اولیه (مخفی و آماده انیمیشن) */
+/* این بخش در ابتدا توسط JS مخفی می شود */
+#latest-trade-section {
+   opacity: 0; /* کاملا شفاف */
+   transition: opacity 0.5s ease-in-out; /* انیمیشن روی opacity */
+   /* display: none; توسط JS در ابتدا تنظیم می شود */
+}
+/* هنگامی که JS بخش را نمایان می کند، opacity به 1 تغییر می کند */
+
+
+/* 7. Responsive Adjustments (تنظیمات واکنش‌گرایی) */
+
+/* تنظیمات برای صفحات کوچکتر از 992px (مثلاً تبلت و موبایل) */
+@media (max-width: 991px) {
+    .content-columns {
+        flex-direction: column; /* اطمینان از چیدمان ستون‌ها زیر هم */
+        gap: 25px; /* فاصله بین بخش فرم و بخش کارت‌ها */
+    }
+
+    .left-column, .right-column {
+        width: 100%; /* پر کردن عرض کامل در حالت تک ستونه */
+    }
+
+    /* تنظیمات خاص برای فرم در موبایل */
+    .form-section {
+        padding: 15px; /* پدینگ داخلی کمتر برای فرم در موبایل */
+    }
+     .form-grid {
+         /* اجازه یک ستونه شدن کامل فیلدها در عرض‌های خیلی کم */
+         grid-template-columns: repeat(auto-fit, minmax(min(150px,100%),1fr)); /* حداقل عرض کمتر در موبایل */
+         gap: 10px; /* فاصله کمتر بین فیلدها در موبایل */
+     }
+     label {
+         font-size: 12px; /* فونت کوچکتر لیبل در موبایل */
+         margin-bottom: 3px;
+     }
+     input:not([type="checkbox"]):not([type="radio"]),
+     select,
+     textarea {
+         padding: 8px 10px; /* پدینگ کمتر فیلدها در موبایل */
+         font-size: 13px; /* فونت کوچکتر فیلدها در موبایل */
+     }
+     input::placeholder, textarea::placeholder {
+         font-size: 12px;
+     }
+
+     .form-actions {
+         margin-top: 15px; /* فاصله کمتر برای دکمه در موبایل */
+         gap: 10px;
+     }
+     .form-actions button {
+         font-size: 14px;
+         padding: 10px 20px;
+     }
+
+
+    /* تنظیمات خاص برای بخش‌های کارت در موبایل */
+     #latest-trade-section, .recent-trades-section {
+        padding: 15px; /* پدینگ داخلی کمتر برای بخش کارت در موبایل */
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+     #trade-cards > h3, #recent-trades > h3 {
+         font-size: 18px; /* فونت کوچکتر تیترهای بخش کارت در موبایل */
+         padding: 8px 12px;
+         margin-bottom: 10px;
+     }
+     .trade-card {
+         padding: 12px; /* پدینگ داخلی کمتر کارت در موبایل */
+         border-radius: 12px;
+         gap: 8px;
+     }
+     .trade-card h3 {
+         font-size: 13px; /* فونت کوچکتر تیتر نماد در موبایل */
+     }
+     .card-info-grid {
+         grid-template-columns: repeat(auto-fit,minmax(90px,1fr)); /* حداقل عرض کمتر برای ستون‌های اطلاعات در موبایل */
+         gap: 5px 10px;
+         font-size: 12px; /* فونت کوچکتر اطلاعات در موبایل */
+         padding-bottom: 8px;
+     }
+     .card-info-grid > div {
+         font-size: 12px;
+     }
+
+    /* دکمه‌های ویرایش و حذف در موبایل */
+     .edit-button, .delete-button {
+         top: 5px; /* موقعیت بالاتر */
+         width: 30px; /* اندازه کوچکتر */
+         height: 30px;
+         font-size: 14px; /* فونت کوچکتر آیکون */
+     }
+     .delete-button {
+         left: 5px;
+     }
+     .edit-button {
+         left: 35px;
+     }
+
+     .status {
+         padding: 5px 10px; /* پدینگ کمتر */
+         font-size: 11px; /* فونت کوچکتر */
+         min-width: 70px;
+     }
+
+      hr {
+         margin: 20px 0; /* فاصله کمتر برای خط جداکننده */
+      }
+
+}
+
+
+/* تنظیمات برای صفحات بزرگتر از 1400px (اختیاری) */
+@media (min-width: 1400px) {
+  .form-container {
+    padding: 0; /* حذف پدینگ از کانتینر اصلی اگر صفحه خیلی بزرگ است */
+  }
+  .content-columns {
+     padding: 40px; /* پدینگ داخلی بیشتر برای محتوا در صفحه خیلی بزرگ */
+  }
+   /* ممکن است نیاز به تنظیمات بیشتر برای اندازه فونت ها یا فاصله ها در صفحه های خیلی بزرگ باشد */
+}
+
+
+/* ============================================
+   تنظیمات استایل اختصاصی برای صفحه مدیریت اطلاعات پایه (initial-info.html)
+   ============================================ */
+
+/* کاهش حداکثر عرض کانتینر اصلی برای این صفحه */
+.initial-info-page .form-container {
+    max-width: 1200px; /* کاهش حداکثر عرض */
+    padding: 20px; /* پدینگ داخلی کانتینر در این صفحه */
+    margin: 5px auto; /* مرکز کردن افقی با مارجین اتوماتیک و فاصله 20px از بالا و پایین */
+}
+
+/* کاهش مارجین پایین تیتر اصلی در این صفحه */
+.initial-info-page .form-container h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    padding: 10px 20px;
+}
+
+/* تنظیمات فلکس باکس برای ستون‌ها در این صفحه (برای نمایش دو ستونه) */
+/* در نمایش RTL، آیتم اول (right-column) در سمت راست قرار می گیرد */
+.initial-info-page .content-columns {
+    display: flex;
+    flex-direction: row-reverse; /* چیدمان ستون ها از راست به چپ */
+    gap: 25px; /* فاصله بین ستون ها */
+    padding: 0 15px 15px 15px; /* پدینگ اطراف محتوا در این صفحه */
+    flex-wrap: wrap; /* اجازه شکستن به ردیف جدید در صفحه های کوچک */
+}
+
+/* تنظیم عرض ستون‌ها در این صفحه */
+.initial-info-page .right-column {
+    flex: 2; /* ستون سمت راست (بروکرها) عرض بیشتری بگیرد */
+    min-width: 400px; /* حداقل عرض برای ستون بروکرها */
+}
+
+.initial-info-page .left-column {
+    flex: 1; /* ستون سمت چپ (نماد و استراتژی) عرض کمتری بگیرد */
+    min-width: 250px; /* حداقل عرض برای ستون نماد/استراتژی */
+     display: flex; /* استفاده از فلکس باکس برای چیدمان عمودی نماد و استراتژی */
+     flex-direction: column;
+     gap: 20px; /* فاصله بین بخش نماد و استراتژی */
+}
+
+
+/* کاهش پدینگ داخلی بخش های فرم (هر section با کلاس form-section) در این صفحه */
+.initial-info-page .form-section {
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-radius: 10px;
+}
+
+/* کاهش فاصله پایین تیترهای داخلی بخش ها (h3) در این صفحه */
+.initial-info-page .form-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+}
+
+/* کاهش فاصله پایین تیترهای داخلی کوچکتر (h4) در این صفحه */
+.initial-info-page .form-section h4 {
+     font-size: 16px;
+     margin-bottom: 8px;
+     padding: 5px 0;
+}
+
+
+/* تنظیمات گرید فرم ها در این صفحه */
+.initial-info-page .form-grid {
+     grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+     gap: 10px;
+}
+
+/* تنظیمات خاص برای فرم افزودن شماره حساب که ممکن است نیاز به چیدمان خاصی داشته باشد */
+.initial-info-page #add-account-form .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr)); /* فیلدهای شماره حساب کوچکتر باشند */
+}
+
+
+/* کاهش فاصله بین لیبل و فیلد و اندازه فونت در این صفحه */
+.initial-info-page label {
+    margin-bottom: 3px;
+    font-size: 13px;
+}
+
+/* کاهش پدینگ و اندازه فونت فیلدهای ورودی، سلکت و تکست اریا در این صفحه */
+.initial-info-page input:not([type="checkbox"]):not([type="radio"]),
+.initial-info-page select,
+.initial-info-page textarea {
+    padding: 8px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+/* کاهش پدینگ و اندازه فونت placeholder در این صفحه */
+.initial-info-page input::placeholder,
+.initial-info-page textarea::placeholder {
+  font-size: 12px;
+}
+
+/* کاهش ارتفاع ناحیه متنی توضیحات (اگر در این صفحه استفاده شود) */
+.initial-info-page textarea {
+    min-height: 60px;
+}
+
+
+/* کاهش فاصله بالا و فاصله بین دکمه ها در form-actions در این صفحه */
+.initial-info-page .form-actions {
+    margin-top: 15px;
+    gap: 10px;
+}
+
+/* کاهش پدینگ و اندازه فونت دکمه ها در این صفحه */
+.initial-info-page .form-actions button {
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+
+/* کاهش مارجین بالا و پایین خط جداکننده hr در این صفحه */
+.initial-info-page hr {
+    margin: 20px 0;
+    border-top: 1px dashed #ccc;
+}
+
+/* استایل لیست شماره حساب ها در این صفحه */
+.initial-info-page .account-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.initial-info-page .account-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* تنظیمات واکنش‌گرایی برای این صفحه */
+@media (max-width: 991px) {
+     .initial-info-page .content-columns {
+        flex-direction: column; /* در موبایل ستون ها زیر هم قرار بگیرند */
+        gap: 25px; /* فاصله بیشتر بین بخش های اصلی در موبایل */
+        padding: 0 15px 15px 15px;
+     }
+      .initial-info-page .right-column,
+      .initial-info-page .left-column {
+          flex: none; /* حذف flex grow/shrink در موبایل */
+          width: 100%; /* پر کردن عرض کامل */
+          min-width: auto; /* حذف حداقل عرض */
+      }
+
+     .initial-info-page .left-column {
+         gap: 20px; /* فاصله بین نماد و استراتژی در موبایل */
+     }
+
+      .initial-info-page .form-section {
+         padding: 15px;
+     }
+
+     /* بازگرداندن برخی تنظیمات موبایل کلی اگر لازم بود یا تنظیم مجدد */
+      .initial-info-page .form-section h3 { font-size: 18px; }
+      .initial-info-page .form-section h4 { font-size: 16px; }
+      .initial-info-page .form-grid { gap: 10px; }
+      .initial-info-page label { font-size: 12px; }
+      .initial-info-page input:not([type="checkbox"]):not([type="radio"]),
+      .initial-info-page select,
+      .initial-info-page textarea { padding: 8px 10px; font-size: 13px; }
+       .initial-info-page .form-actions button { font-size: 14px; padding: 10px 20px; }
+       .initial-info-page hr { margin: 25px 0; } /* فاصله خط جداکننده بین بخش ها در موبایل */
+
+}
+
+
+/* تنظیمات برای صفحات بزرگتر از 1400px (اختیاری) */
+@media (min-width: 1400px) {
+  .form-container {
+    padding: 0; /* حذف پدینگ از کانتینر اصلی اگر صفحه خیلی بزرگ است */
+  }
+  .content-columns {
+     padding: 40px; /* پدینگ داخلی بیشتر برای محتوا در صفحه خیلی بزرگ */
+  }
+   /* ممکن است نیاز به تنظیمات بیشتر برای اندازه فونت ها یا فاصله ها در صفحه های خیلی بزرگ باشد */
+}
+/* کنترل اندازه دکمه ها در بخش های فرم صفحه مدیریت اطلاعات پایه */
+.initial-info-page .form-actions button {
+    max-width: 200px; /* حداکثر عرض برای دکمه */
+    width: 80%; /* برای اطمینان که در فضاهای کوچک تر عرض کامل را بگیرد تا 200px */
+    /* می توانید text-align: center; اضافه کنید اگر متن روی دکمه وسط چین نیست */
+}
+/* اطمینان از اینکه بخش دکمه ها در فرم افزودن شماره حساب در سطر جدید قرار می گیرد */
+.initial-info-page #add-account-form .form-actions {
+    width: 100%; /* باعث می شود این div عرض کامل را بگیرد و به سطر جدید منتقل شود */
+    /* display: flex; و justify-content: center; که قبلاً تعریف شده اند، دکمه را در این عرض کامل وسط چین می کنند */
+    margin-top: 10px; /* فاصله از فیلدهای بالایی (می توانید تنظیم کنید) */
+}
+/* تنظیم فرم افزودن شماره حساب به صورت فلکس عمودی برای اطمینان از چیدمان زیر هم */
+.initial-info-page #add-account-form {
+    display: flex;
+    flex-direction: column; /* چیدمان فرزندان (form-grid و form-actions) به صورت عمودی */
+    gap: 15px; /* فاصله بین form-grid و form-actions (می توانید تنظیم کنید) */
+}
+
+/* استایل های قبلی form-grid و form-actions در این فرم همچنان اعمال می شوند */
+/* .initial-info-page #add-account-form .form-grid { ... } */
+/* .initial-info-page #add-account-form .form-actions {
+    width: 100%; /* این قانون همچنان لازم است تا دکمه وسط چین شود */
+    /* ... display: flex و justify-content: center ... */
+/* } */
+
+/* کنترل اندازه دکمه در این بخش */
+.initial-info-page #add-account-form .form-actions button {
+    max-width: 100px; /* حداکثر عرض برای دکمه */
+    width: 100%; /* برای اطمینان که در فضاهای کوچک تر عرض کامل را بگیرد تا 200px */
+}
+
+
+/* ============================================
+   استایل دهی لیست نمادها و استراتژی‌ها در صفحه مدیریت اطلاعات پایه
+   ============================================ */
+
+/* استایل لیست‌های ul */
+.initial-info-page #symbol-list,
+.initial-info-page #strategy-list {
+    list-style: none; /* حذف نشانگرهای لیست پیش فرض */
+    padding: 0; /* حذف پدینگ پیش فرض لیست */
+    margin-top: 10px; /* فاصله از تیتر بالای لیست */
+    border-top: 1px solid #eee; /* خط جداکننده بالای لیست */
+    padding-top: 10px; /* پدینگ بالای خط جداکننده */
+}
+
+/* استایل آیتم‌های لیست (li) */
+.initial-info-page #symbol-list li,
+.initial-info-page #strategy-list li {
+    background-color: #f9f9f9; /* پس زمینه کمی خاکستری */
+    border: 1px solid #eee; /* مرز نازک */
+    padding: 8px 12px; /* پدینگ داخلی */
+    margin-bottom: 5px; /* فاصله پایین هر آیتم */
+    border-radius: 4px; /* گردی گوشه‌ها */
+    font-size: 13px; /* اندازه فونت */
+    color: #333; /* رنگ متن */
+    display: flex; /* استفاده از فلکس برای چیدمان داخلی آیتم */
+    justify-content: space-between; /* پخش کردن محتوا (متن و دکمه‌ها) */
+    align-items: center; /* تراز عمودی در مرکز */
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* افکت هاور روی آیتم‌های لیست */
+.initial-info-page #symbol-list li:hover,
+.initial-info-page #strategy-list li:hover {
+    background-color: #f0f0f0; /* تغییر پس زمینه هنگام هاور */
+    border-color: #ccc; /* تغییر رنگ مرز هنگام هاور */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* اضافه کردن سایه ملایم */
+}
+
+
+/* استایل دهی به کانتینر دکمه‌های ویرایش/حذف داخل آیتم‌های لیست */
+.initial-info-page #symbol-list li .list-item-actions,
+.initial-info-page #strategy-list li .list-item-actions {
+    display: flex;
+    gap: 5px; /* فاصله بین دکمه‌ها */
+    align-items: center;
+}
+
+/* استایل دکمه‌های ویرایش/حذف داخل آیتم‌های لیست */
+.initial-info-page #symbol-list li .list-item-actions button,
+.initial-info-page #strategy-list li .list-item-actions button {
+    background: none; /* حذف پس زمینه دکمه */
+    border: none; /* حذف مرز دکمه */
+    font-size: 14px; /* اندازه آیکون/ایموجی */
+    cursor: pointer; /* نشانگر ماوس */
+    padding: 4px; /* پدینگ کوچک برای ناحیه کلیک */
+    transition: transform 0.1s ease-in-out, opacity 0.1s ease-in-out;
+}
+
+/* رنگ دهی به دکمه‌ها */
+.initial-info-page #symbol-list li .list-item-actions .edit-symbol-button,
+.initial-info-page #strategy-list li .list-item-actions .edit-strategy-button {
+    color: #007bff; /* رنگ آبی برای ویرایش */
+}
+.initial-info-page #symbol-list li .list-item-actions .delete-symbol-button,
+.initial-info-page #strategy-page li .list-item-actions .delete-strategy-button {
+    color: #dc3545; /* رنگ قرمز برای حذف */
+}
+
+/* افکت هاور روی دکمه‌ها */
+.initial-info-page #symbol-list li .list-item-actions button:hover,
+.initial-info-page #strategy-list li .list-item-actions button:hover {
+    transform: scale(1.1); /* کمی بزرگ شدن هنگام هاور */
+    opacity: 0.8; /* کمی شفاف شدن */
+}
+
+/* افکت کلیک روی دکمه‌ها */
+.initial-info-page #symbol-list li .list-item-actions button:active,
+.initial-info-page #strategy-list li .list-item-actions button:active {
+    transform: scale(0.9); /* کمی کوچک شدن هنگام کلیک */
+    opacity: 0.6;
+}
+
+/* استایل برای آیتم‌های لیست خالی (پیام "هیچ نمادی/استراتژی ثبت نشده است") */
+.initial-info-page #symbol-list li:first-child:last-child,
+.initial-info-page #strategy-list li:first-child:last-child {
+    text-align: center; /* متن را در مرکز قرار بده */
+    font-style: italic; /* متن را ایتالیک کن */
+    color: #666; /* رنگ متن کمی تیره‌تر */
+    background-color: #f0f0f0; /* پس زمینه کمی متفاوت */
+    justify-content: center; /* وسط چین کردن محتوا */
+    padding: 10px; /* پدینگ کمی بیشتر */
+}
+/* استایل دهی اختصاصی برای دکمه "افزودن شماره حساب" */
+.initial-info-page #add-account-form .form-actions button {
+    padding: 10px 30px; /* کاهش پدینگ عمودی به 8px (پدینگ افقی همان 20px می ماند) */
+    /*
+     * خطوط زیر را که قبلاً max-width و width را تنظیم می کردند،
+     * حالا کامنت یا حذف می کنیم تا اندازه دکمه بر اساس محتوا و پدینگ تنظیم شود.
+     */
+    /* max-width: 200px; */
+    /* width: 100%;    */
+    /* اگر لازم بود می توانید min-width هم اضافه کنید */
+    min-width: 150px;
+}
+/* ============================================
+   استایل دهی سود/زیان در کارت‌های ترید
+   ============================================ */
+
+/* استایل کلی برای عنصری که مقدار سود/زیان را نمایش می‌دهد */
+.trade-card .profit-loss-value {
+    font-weight: bold; /* پررنگ کردن متن */
+    /* می‌توانید تنظیمات فونت دیگری نیز اینجا اضافه کنید */
+}
+
+/* استایل برای سود (مقدار مثبت یا صفر) */
+.trade-card .profit-loss-value.positive {
+    color: #28a745; /* رنگ سبز */
+}
+
+/* استایل برای زیان (مقدار منفی) */
+.trade-card .profit-loss-value.negative {
+    color: #dc3545; /* رنگ قرمز */
+}
+
+/* اختیاری: اگر می‌خواهید علامت منفی کاملاً مطمئن شوید که سمت چپ عدد است */
+/* معمولاً مرورگرها این کار را به صورت پیش‌فرض انجام می‌دهند، اما اگر مشکل داشتید از این استفاده کنید */
+.trade-card .profit-loss-value.negative {
+    direction: ltr; /* اطمینان از جهت چپ به راست برای نمایش عدد */
+    unicode-bidi: isolate; /* جداسازی جهت دهی این عنصر */
+}
+/* ============================================
+   استایل دهی جدول تریدها در صفحه گزارش‌ها
+   ============================================ */
+
+/* کانتینر جدول برای مدیریت اسکرول افقی در صورت نیاز */
+.reports-page .table-container {
+    overflow-x: auto; /* اضافه کردن اسکرول افقی اگر محتوا از عرض بیشتر شد */
+    margin-top: 15px; /* فاصله از تیتر لیست تریدها */
+}
+/* Filter Controls Grid adjustments for a more compact layout */
+.reports-page #filter-controls .form-grid {
+    display: grid;
+    /* تنظیم عرض ستون‌ها برای فیلترها */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* عرض مینیمم را کمی کاهش می‌دهیم */
+    gap: 10px 15px; /* فاصله کمتر بین ردیف‌ها و ستون‌ها */
+}
+/* استایل دهی کلی جدول */
+.reports-page #trades-table {
+    width: 100%; /* اطمینان از اشغال عرض کامل توسط جدول */
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.85em; /* کمی کوچکتر کردن فونت جدول */
+    table-layout: auto; /* یا fixed اگر می‌خواهید عرض ستون‌ها را کنترل کنید */
+}
+
+.reports-page #trades-table th,
+.reports-page #trades-table td {
+    border: 1px solid #ddd;
+    padding: 8px 6px; /* پدینگ سلول‌ها را کاهش می‌دهیم */
+    text-align: center; /* تنظیم تراز متن به مرکز */
+    /* white-space: nowrap; /* ممکن است باعث overflow شود، اگر نیاز نیست حذف کنید */
+    overflow: hidden; /* پنهان کردن محتوای اضافی */
+    text-overflow: ellipsis; /* نمایش ... برای متن‌های طولانی */
+    word-wrap: break-word; /* شکستن کلمات طولانی */
+}
+.reports-page #trades-table th {
+    background-color: #007bff; /* رنگ هدر جدول */
+    color: white;
+    font-weight: bold;
+    position: sticky; /* نگه داشتن هدر هنگام اسکرول */
+    top: 0;
+    z-index: 1; /* اطمینان از نمایش بالای محتوای جدول */
+}
+.reports-page #trades-table thead {
+    border-bottom: 2px solid #0056b3; /* مرز ضخیم تر پایین thead */
+}
+
+/* استایل دهی بدنه جدول (tbody و td) */
+.reports-page #trades-table tbody td {
+    padding: 8px 12px;
+    border: 1px solid #ddd; /* مرز کلی */
+     /* حذف مرزهای بالا و چپ/راست در اینجا */
+     border-top: none;
+     /* border-left: none; */
+     /* border-right: none; */
+
+    color: #333;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* حداکثر عرض برای سلول‌ها (می توانید تنظیم کنید) */
+}
+.reports-page .content-columns {
+    display: block; /* تغییر از flex به block برای مدیریت ساده‌تر یک ستون */
+    /* gap: 20px; /* نیازی به gap نیست وقتی display: block است */
+}
+
+.reports-page .full-width-column {
+    width: 100%; /* اطمینان از اشغال عرض کامل */
+    /* flex-basis: 100%; flex-grow: 0; flex-shrink: 0; /* تنظیمات flexbox اگر display: flex بود */
+}
+
+/* اضافه کردن مرز پایین جداگانه برای هر ردیف در tbody */
+.reports-page #trades-table tbody tr {
+    border-bottom: 1px solid #eee; /* مرز نازک پایین هر ردیف */
+	background-color: #f8f8f8; /* رنگ پس زمینه ردیف‌های زوج */
+}
+
+/* حذف مرز پایین از آخرین ردیف */
+.reports-page #trades-table tbody tr:last-child {
+    border-bottom: none;
+}
+/* استایل دهی برای ردیف های زوج و فرد (برای خوانایی بهتر) */
+.reports-page #trades-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* پس زمینه کمی خاکستری برای ردیف های زوج */
+}
+
+/* افکت هاور روی ردیف ها (اختیاری) */
+.reports-page #trades-table tbody tr:hover {
+    background-color: #e9e9e9; /* تغییر پس زمینه هنگام هاور */
+}
+
+/* استایل دهی برای سلول های خاص (مثلاً سود/زیان) - استفاده از کلاس هایی که با JS اضافه می کنیم */
+.reports-page #trades-table tbody td .status {
+    /* استفاده از استایل های .status که قبلاً برای کارت ها تعریف کردیم */
+    padding: 4px 8px; /* پدینگ کمتر برای وضعیت در جدول */
+    font-size: 11px; /* فونت کوچکتر برای وضعیت در جدول */
+    display: inline-block; /* نمایش به صورت inline-block برای اعمال پدینگ و مرز */
+}
+
+/* استایل دهی برای سلول حاوی پیام "داده ای برای نمایش وجود ندارد" */
+.reports-page #trades-table tbody td[colspan="15"] {
+    text-align: center; /* وسط چین کردن متن */
+    font-style: italic; /* ایتالیک کردن متن */
+    color: #777; /* رنگ خاکستری تر */
+    padding: 20px; /* پدینگ بیشتر */
+}
+/* Section for Summary Statistics */
+/* Section for Summary Statistics */
+.reports-page #summary-stats-section .summary-grid {
+    display: grid;
+    /* تنظیم grid-template-columns برای نمایش آیتم‌ها در ستون‌های بیشتر و فشرده‌تر */
+    /* هر ستون حداقل 120px و حداکثر هر چقدر نیاز است تا پر کند */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px; /* کاهش فاصله بین آیتم‌ها */
+    padding: 10px; /* کاهش پدینگ کلی گرید */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    width: 100%; /* اطمینان از اشغال عرض کامل توسط گرید */
+    box-sizing: border-box; /* محاسبه پدینگ و border در داخل عرض */
+}
+
+.reports-page #summary-stats-section .stat-item {
+    background-color: #fff;
+    padding: 8px 10px; /* کاهش پدینگ آیتم‌ها */
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 70px; /* ارتفاع حداقل برای آیتم‌ها را کمی کاهش می‌دهیم */
+}
+
+.reports-page #summary-stats-section .stat-item p {
+    margin-bottom: 3px; /* کاهش فاصله پایین پاراگراف */
+    font-size: 0.8em; /* فونت کوچکتر برای عنوان */
+    color: #555;
+    word-break: break-word; /* اجازه شکستن کلمات طولانی */
+    white-space: normal; /* اجازه شکستن خط */
+}
+
+.reports-page #summary-stats-section .stat-item span {
+    font-size: 1.3em; /* فونت مناسب برای اعداد */
+    font-weight: bold;
+    color: #007bff; /* رنگ آبی برای اعداد (قابل تغییر) */
+    display: block;
+    direction: ltr; /* اطمینان از جهت نوشتاری چپ به راست برای اعداد */
+    unicode-bidi: isolate;
+    word-break: break-all; /* اجازه شکستن کلمات یا اعداد در صورت نیاز */
+}
+
+.reports-page #summary-stats-section .stat-item span.positive {
+    color: #28a745; /* سبز */
+}
+
+.reports-page #summary-stats-section .stat-item span.negative {
+    color: #dc3545; /* قرمز */
+}
+
+
+/* اگر می خواهید سلول های سود/زیان رنگی شوند، باید کلاس های positive و negative را در JS به سلول یا محتوای آن اضافه کنید
+   و سپس استایل های مشابه استایل های .trade-card .profit-loss-value.positive/negative را برای سلول های جدول بنویسید
+   مثال:
+   .reports-page #trades-table tbody td.profit-loss-positive { color: #28a745; font-weight: bold; }
+   .reports-page #trades-table tbody td.profit-loss-negative { color: #dc3545; font-weight: bold; }
+*/
+
+/* استایل دهی برای سلول سود/زیان با کلاس های رنگی که در JS به محتوای span اضافه کردیم */
+/* فرض می کنیم شما یک span با کلاس profit-loss-value داخل td دارید */
+.reports-page #trades-table tbody td .profit-loss-value {
+     font-weight: bold; /* پررنگ کردن */
+     /* اطمینان از جهت نوشتاری چپ به راست برای عدد و علامت */
+     direction: ltr;
+     unicode-bidi: isolate;
+}
+
+.reports-page #trades-table tbody td .profit-loss-value.positive {
+    color: #28a745; /* سبز */
+}
+
+.reports-page #trades-page tbody td .profit-loss-value.negative {
+    color: #dc3545; /* قرمز */
+}
+
+
+/* تنظیمات واکنش‌گرایی برای جدول در صفحه های کوچک */
+@media (max-width: 768px) {
+    .reports-page #trades-table {
+        font-size: 12px; /* فونت کوچکتر در موبایل */
+    }
+    .reports-page #trades-table thead th,
+    .reports-page #trades-table tbody td {
+        padding: 8px 10px; /* پدینگ کمتر در موبایل */
+         max-width: 100px; /* کاهش حداکثر عرض سلول ها در موبایل */
+    }
+     .reports-page #trades-table thead th {
+         font-size: 12px; /* فونت کوچکتر تیتر در موبایل */
+     }
+
+     /* شاید لازم باشد برای ستون‌های خاص عرض کمتری تنظیم کنید */
+     /* مثال:
+     .reports-page #trades-table tbody td:nth-child(1) { max-width: 80px; }  نماد
+     .reports-page #trades-table tbody td:nth-child(2) { max-width: 90px; }  تاریخ ورود
+     ...
+     */
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گزارش‌ها و آمار ترید</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+<body class="reports-page">
+    <main class="form-container">
+        <div class="page-header-container">
+             <h2>گزارش‌ها و آمار ترید</h2>
+             <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">ثبت ترید</a></li>
+                    <li><a href="initial-info.html">مدیریت اطلاعات پایه</a></li>
+                    <li><a href="reports.html" class="active">گزارش‌ها و آمار</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content-columns">
+            <div class="full-width-column">
+                <section class="form-section" id="filter-controls">
+                    <h3>فیلتر گزارش</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="filter-start-date">تاریخ شروع:</label>
+                            <input type="date" id="filter-start-date" name="filter-start-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="filter-end-date">تاریخ پایان:</label>
+                            <input type="date" id="filter-end-date" name="filter-end-date">
+                        </div>
+                        <div class="form-group">
+                             <label for="filter-symbol">نماد:</label>
+                             <select id="filter-symbol" name="filter-symbol">
+                                 <option value="">همه نمادها</option>
+                                 </select>
+                        </div>
+                        <div class="form-group">
+                             <label for="filter-broker">بروکر:</label>
+                             <select id="filter-broker" name="filter-broker">
+                                 <option value="">همه بروکرها</option>
+                                 </select>
+                        </div>
+                        <div class="form-group">
+                             <label for="filter-strategy">استراتژی:</label>
+                             <select id="filter-strategy" name="filter-strategy">
+                                 <option value="">همه استراتژی‌ها</option>
+                                 </select>
+                        </div>
+                         <div class="form-group">
+                             <label for="filter-emotion">احساسات:</label>
+                             <select id="filter-emotion" name="filter-emotion">
+                                 <option value="">همه احساسات</option>
+                                 <option value="fear">ترس</option>
+                                 <option value="greed">طمع</option>
+                                 <option value="hope">امید</option>
+                                 <option value="excitement">هیجان</option>
+                                 <option value="neutral">خنثی</select>
+                            </div>
+                        </div>
+                    <div class="form-actions">
+                        <button type="button" id="filter-apply-btn">اعمال فیلتر</button>
+                        <button type="button" id="filter-reset-btn">بازنشانی فیلترها</button>
+                    </div>
+                </section>
+
+                <section class="form-section" id="summary-stats-section">
+                    <h3>خلاصه آمار</h3>
+                    <div class="summary-grid">
+                        <div class="stat-item">
+                            <p>تعداد کل تریدها:</p>
+                            <span id="total-trades">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>تعداد تریدهای برد:</p>
+                            <span id="total-wins">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>تعداد تریدهای باخت:</p>
+                            <span id="total-losses">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>وین ریت:</p>
+                            <span id="win-rate">0.00%</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>کل سود/زیان ($):</p>
+                            <span id="total-profit-loss-usd">0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>کل سود/زیان (پیپ):</p>
+                            <span id="total-profit-loss-pip">0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>متوسط سود به ازای هر ترید ($):</p>
+                            <span id="avg-profit-per-trade-usd">0.00</span>
+                        </div>
+                         <div class="stat-item">
+                            <p>متوسط سود به ازای هر ترید (پیپ):</p>
+                            <span id="avg-profit-per-trade-pip">0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>بزرگترین سود ($):</p>
+                            <span id="largest-profit-usd">0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>بزرگترین زیان ($):</p>
+                            <span id="largest-loss-usd">0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>بزرگترین سود (پیپ):</p>
+                            <span id="largest-profit-pip">0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>بزرگترین زیان (پیپ):</p>
+                            <span id="largest-loss-pip">0.00</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section" id="trades-list-section">
+                    <h3>لیست تریدها</h3>
+                    <div class="table-container">
+                        <table id="trades-table">
+                            <thead>
+                                <tr>
+                                    <th>نماد</th>
+                                    <th>تاریخ ورود</th>
+                                    <th>جهت</th>
+                                    <th>سشن</th> <th>حجم</th>
+                                    <th>سود/زیان ($)</th>
+                                    <th>سود/زیان (پیپ)</th>
+                                    <th>مدت</th>
+                                    <th>بروکر</th>
+                                    <th>استراتژی</th>
+                                    <th>احساسات</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trades-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/reports.js"></script>
+
+</body>
+</html>

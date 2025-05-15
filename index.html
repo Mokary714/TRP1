@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Journal</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    </head>
+<body>
+
+    <main class="form-container">
+        <h2>فرم ثبت ترید</h2>
+
+        <div class="content-columns">
+
+            <div class="left-column">
+                 <section class="cards-section" id="latest-trade-section">
+                    <div id="trade-cards">
+                       <h3>ترید ثبت شده (آخرین ترید)</h3>
+                       </div>
+                </section> <section class="recent-trades-section">
+                    <div id="recent-trades">
+                         <h3>۱۰ ترید آخر</h3>
+                         </div>
+                </section> </div> <div class="right-column">
+                <section class="form-section">
+                    <form id="trade-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="symbol">نماد:</label>
+                                <select id="symbol" name="symbol" required>
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="EURUSD">EURUSD</option>
+                                    <option value="GBPUSD">GBPUSD</option>
+                                    <option value="DJI30">DJI30</option>
+                                    <option value="XAUUSD">XAUUSD</option>
+                                    <option value="USDCAD">USDCAD</option>
+                                    <option value="AUDUSD">AUDUSD</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tradeDirection">جهت معامله:</label>
+                                <select id="tradeDirection" name="tradeDirection" required>
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="Buy">خرید</option>
+                                    <option value="Sell">فروش</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="orderType">نوع اردر:</label>
+                                <select id="orderType" name="orderType" required>
+                                    <option value="">انتخاب کنید</option>
+                                    </select>
+                            </div>
+
+                             <div class="form-group">
+                                <label for="volume">حجم:</label>
+                                <input type="number" id="volume" name="volume" step="0.01" required min="0.01">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="entryPrice">قیمت ورود:</label>
+                                <input type="number" id="entryPrice" name="entryPrice" step="0.00001" required min="0">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="exitPrice">قیمت خروج:</label>
+                                <input type="number" id="exitPrice" name="exitPrice" step="0.00001" min="0">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="stopLoss">استاپ لاس:</label>
+                                <input type="number" id="stopLoss" name="stopLoss" step="0.00001" min="0">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="takeProfit">تیک پرافیت:</label>
+                                <input type="number" id="takeProfit" name="takeProfit" step="0.00001" min="0">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="commission">کمیسیون:</label>
+                                <input type="number" id="commission" name="commission" step="0.01" value="0" min="0">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="entryTime">زمان ورود:</label>
+                                <input type="datetime-local" id="entryTime" name="entryTime" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exitTime">زمان خروج:</label>
+                                <input type="datetime-local" id="exitTime" name="exitTime">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="timeframe">تایم فریم:</label>
+                                <select id="timeframe" name="timeframe">
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="M1">M1</option>
+                                    <option value="M5">M5</option>
+                                    <option value="M15">M15</option>
+                                    <option value="M30">M30</option>
+                                    <option value="H1">H1</option>
+                                    <option value="H4">H4</option>
+                                    <option value="D1">D1</option>
+                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="broker">بروکر:</label>
+                                <select id="broker" name="broker">
+                                   <option value="">انتخاب کنید</option>
+                                   <option value="ICMarkets">ICMarkets</option>
+                                   <option value="RoboForex">RoboForex</option>
+                                   <option value="Exness">Exness</option>
+                                   <option value="xChief">xChief</option>
+                               </select>
+                            </div>
+							<div class="form-group">
+    <label for="accountNumber">شماره حساب:</label>
+    <select id="accountNumber" name="accountNumber">
+        <option value="">انتخاب کنید</option>
+        </select>
+</div>
+<div class="form-group">
+    <label for="orderNumber">شماره اوردر:</label>
+    <input type="text" id="orderNumber" name="orderNumber">
+</div>
+                             <div class="form-group">
+                                <label for="strategy">استراتژی:</label>
+                                 <select id="strategy" name="strategy">
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="Breakout">Breakout</option>
+                                    <option value="Pullback">Pullback</option>
+                                    <option value="Range">Range</option>
+                                    <option value="News">News</option>
+                                </select>
+                            </div>
+
+                             <div class="form-group">
+                                <label for="emotion">احساسات:</label>
+                                 <select id="emotion" name="emotion">
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="fear">ترس</option>
+                                    <option value="greed">طمع</option>
+                                    <option value="hope">امید</option>
+                                    <option value="excitement">هیجان</option>
+                                    <option value="neutral">خنثی</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group full-width">
+                                <label for="notes">توضیحات:</label>
+                                <textarea id="notes" name="notes" rows="4"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit">ذخیره ترید</button>
+                             </div>
+                    </form>
+                </section> </div> </div> </main>
+
+    <script src="js/script.js"></script>
+<body class="trade-entry-page">
+</body>
+</html>
