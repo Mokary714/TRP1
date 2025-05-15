@@ -1,129 +1,128 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>گزارش‌ها و آمار ترید</title>
+    <title>گزارش‌ها - ژورنال معاملات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-<link rel="stylesheet" href="../static/css/reports.css">
-    </head>
-<body class="reports-page">
-    <main class="form-container">
+    <link rel="stylesheet" href="../static/css/reports.css">
+</head>
+<body>
+    <div class="form-container">
         <div class="page-header-container">
-             <h2>گزارش‌ها و آمار ترید</h2>
-             <nav class="main-nav">
+            <h2>گزارش معاملات</h2>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="../index.html">ثبت ترید</a></li>
                     <li><a href="initial-info.html">مدیریت اطلاعات پایه</a></li>
-                    <li><a href="reports.html" class="active">گزارش‌ها و آمار</a></li>
+                    <li><a href="reports.html">گزارش‌ها</a></li>
                 </ul>
             </nav>
         </div>
-
-        <div class="content-columns">
-            <div class="full-width-column">
-                <section class="form-section" id="filter-controls">
-                    <h3>فیلتر گزارش</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="filter-start-date">تاریخ شروع:</label>
-                            <input type="date" id="filter-start-date" name="filter-start-date">
-                        </div>
-                        <div class="form-group">
-                            <label for="filter-end-date">تاریخ پایان:</label>
-                            <input type="date" id="filter-end-date" name="filter-end-date">
-                        </div>
-                        <div class="form-group">
-                             <label for="filter-symbol">نماد:</label>
-                             <select id="filter-symbol" name="filter-symbol">
-                                 <option value="">همه نمادها</option>
-                                 </select>
-                        </div>
-                        <div class="form-group">
-                             <label for="filter-broker">بروکر:</label>
-                             <select id="filter-broker" name="filter-broker">
-                                 <option value="">همه بروکرها</option>
-                                 </select>
-                        </div>
-                        <div class="form-group">
-                             <label for="filter-strategy">استراتژی:</label>
-                             <select id="filter-strategy" name="filter-strategy">
-                                 <option value="">همه استراتژی‌ها</option>
-                                 </select>
-                        </div>
-                         <div class="form-group">
-                             <label for="filter-emotion">احساسات:</label>
-                             <select id="filter-emotion" name="filter-emotion">
-                                 <option value="">همه احساسات</option>
-                                 <option value="fear">ترس</option>
-                                 <option value="greed">طمع</option>
-                                 <option value="hope">امید</option>
-                                 <option value="excitement">هیجان</option>
-                                 <option value="neutral">خنثی</select>
+        <div class="reports-page">
+            <div class="content-columns">
+                <div class="full-width-column">
+                    <div id="filter-controls" class="form-section">
+                        <form id="filters-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="filter-symbol">نماد</label>
+                                    <select id="filter-symbol">
+                                        <option value="">همه</option>
+                                        <!-- پر شده توسط JS -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="filter-broker">بروکر</label>
+                                    <select id="filter-broker">
+                                        <option value="">همه</option>
+                                        <!-- پر شده توسط JS -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="filter-strategy">استراتژی</label>
+                                    <select id="filter-strategy">
+                                        <option value="">همه</option>
+                                        <!-- پر شده توسط JS -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="filter-emotion">احساسات</label>
+                                    <select id="filter-emotion">
+                                        <option value="">همه</option>
+                                        <!-- پر شده توسط JS -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="timeframe-filter">تایم‌فریم</label>
+                                    <select id="timeframe-filter">
+                                        <option value="">همه</option>
+                                        <option value="M1">M1</option>
+                                        <option value="M5">M5</option>
+                                        <option value="M15">M15</option>
+                                        <option value="M30">M30</option>
+                                        <option value="H1">H1</option>
+                                        <option value="H4">H4</option>
+                                        <option value="D1">D1</option>
+                                        <option value="W1">W1</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status-filter">وضعیت</label>
+                                    <select id="status-filter">
+                                        <option value="">همه</option>
+                                        <option value="Win">موفق</option>
+                                        <option value="Loss">ناموفق</option>
+                                        <option value="Pending">در انتظار</option>
+                                        <option value="BreakEven">سر به سر</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trade-type-filter">نوع ترید</label>
+                                    <select id="trade-type-filter">
+                                        <option value="">همه</option>
+                                        <option value="Buy">خرید</option>
+                                        <option value="Sell">فروش</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weekday-filter">روز هفته</label>
+                                    <select id="weekday-filter">
+                                        <option value="">همه</option>
+                                        <option value="شنبه">شنبه</option>
+                                        <option value="یکشنبه">یکشنبه</option>
+                                        <option value="دوشنبه">دوشنبه</option>
+                                        <option value="سه‌شنبه">سه‌شنبه</option>
+                                        <option value="چهارشنبه">چهارشنبه</option>
+                                        <option value="پنج‌شنبه">پنج‌شنبه</option>
+                                        <option value="جمعه">جمعه</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="session-filter">سشن معاملاتی</label>
+                                    <select id="session-filter">
+                                        <option value="">همه</option>
+                                        <option value="سیدنی">سیدنی</option>
+                                        <option value="توکیو">توکیو</option>
+                                        <option value="لندن">لندن</option>
+                                        <option value="نیویورک">نیویورک</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="filter-start-date">از تاریخ</label>
+                                    <input type="date" id="filter-start-date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="filter-end-date">تا تاریخ</label>
+                                    <input type="date" id="filter-end-date">
+                                </div>
                             </div>
-                        </div>
-                    <div class="form-actions">
-                        <button type="button" id="filter-apply-btn">اعمال فیلتر</button>
-                        <button type="button" id="filter-reset-btn">بازنشانی فیلترها</button>
+                            <div class="form-actions">
+                                <button type="button" id="filter-apply-btn">اعمال فیلتر</button>
+                                <button type="button" id="filter-reset-btn">بازنشانی فیلترها</button>
+                            </div>
+                        </form>
                     </div>
-                </section>
-
-                <section class="form-section" id="summary-stats-section">
-                    <h3>خلاصه آمار</h3>
-                    <div class="summary-grid">
-                        <div class="stat-item">
-                            <p>تعداد کل تریدها:</p>
-                            <span id="total-trades">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>تعداد تریدهای برد:</p>
-                            <span id="total-wins">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>تعداد تریدهای باخت:</p>
-                            <span id="total-losses">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>وین ریت:</p>
-                            <span id="win-rate">0.00%</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>کل سود/زیان ($):</p>
-                            <span id="total-profit-loss-usd">0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>کل سود/زیان (پیپ):</p>
-                            <span id="total-profit-loss-pip">0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>متوسط سود به ازای هر ترید ($):</p>
-                            <span id="avg-profit-per-trade-usd">0.00</span>
-                        </div>
-                         <div class="stat-item">
-                            <p>متوسط سود به ازای هر ترید (پیپ):</p>
-                            <span id="avg-profit-per-trade-pip">0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>بزرگترین سود ($):</p>
-                            <span id="largest-profit-usd">0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>بزرگترین زیان ($):</p>
-                            <span id="largest-loss-usd">0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>بزرگترین سود (پیپ):</p>
-                            <span id="largest-profit-pip">0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <p>بزرگترین زیان (پیپ):</p>
-                            <span id="largest-loss-pip">0.00</span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="form-section" id="trades-list-section">
-                    <h3>لیست تریدها</h3>
                     <div class="table-container">
                         <table id="trades-table">
                             <thead>
@@ -131,28 +130,44 @@
                                     <th>نماد</th>
                                     <th>تاریخ ورود</th>
                                     <th>جهت</th>
-                                    <th>سشن</th> <th>حجم</th>
+                                    <th>تایم‌فریم</th>
+                                    <th>سشن</th>
+                                    <th>حجم</th>
                                     <th>سود/زیان ($)</th>
                                     <th>سود/زیان (پیپ)</th>
                                     <th>مدت</th>
                                     <th>بروکر</th>
                                     <th>استراتژی</th>
-                                    <th>احساسات</th>
                                     <th>وضعیت</th>
+                                    <th>احساسات</th>
                                     <th>عملیات</th>
                                 </tr>
                             </thead>
                             <tbody id="trades-table-body">
-                                </tbody>
+                                <!-- پر شده توسط JS -->
+                            </tbody>
                         </table>
                     </div>
-                </section>
-
+                    <div id="summary-stats-section">
+                        <div class="summary-grid">
+                            <div class="stat-item"><p>تعداد کل تریدها</p><span id="total-trades">0</span></div>
+                            <div class="stat-item"><p>تعداد بردها</p><span id="total-wins">0</span></div>
+                            <div class="stat-item"><p>تعداد باخت‌ها</p><span id="total-losses">0</span></div>
+                            <div class="stat-item"><p>نرخ برد</p><span id="win-rate">0%</span></div>
+                            <div class="stat-item"><p>سود/زیان کل ($)</p><span id="total-profit-loss-usd">0</span></div>
+                            <div class="stat-item"><p>سود/زیان کل (پیپ)</p><span id="total-profit-loss-pip">0</span></div>
+                            <div class="stat-item"><p>میانگین سود/ترید ($)</p><span id="avg-profit-per-trade-usd">0</span></div>
+                            <div class="stat-item"><p>میانگین سود/ترید (پیپ)</p><span id="avg-profit-per-trade-pip">0</span></div>
+                            <div class="stat-item"><p>بزرگ‌ترین سود ($)</p><span id="largest-profit-usd">0</span></div>
+                            <div class="stat-item"><p>بزرگ‌ترین ضرر ($)</p><span id="largest-loss-usd">0</span></div>
+                            <div class="stat-item"><p>بزرگ‌ترین سود (پیپ)</p><span id="largest-profit-pip">0</span></div>
+                            <div class="stat-item"><p>بزرگ‌ترین ضرر (پیپ)</p><span id="largest-loss-pip">0</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
-
+    </div>
     <script src="../js/reports.js"></script>
-
 </body>
 </html>
